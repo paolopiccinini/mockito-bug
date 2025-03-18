@@ -35,3 +35,4 @@ public class SpringbootwildflyApplication extends SpringBootServletInitializer {
 
     private static Class<SpringbootwildflyApplication> applicationClass = SpringbootwildflyApplication.class;
 }
+

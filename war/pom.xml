@@ -63,15 +63,6 @@
     </dependencies>
     <build>
         <finalName>springbootwildfly</finalName>
-        <plugins>
-            <!--plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>org.example.SpringbootwildflyApplication</mainClass>
-                </configuration>
-            </plugin-->
-        </plugins>
     </build>
 
 </project>

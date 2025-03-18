@@ -4,9 +4,9 @@ COPY .mvn /code/mockito-bug/.mvn
 COPY pom.xml /code/mockito-bug/
 
 COPY ./war/pom.xml /code/mockito-bug/war/
-COPY ./war/src /code/mockito-bug/war/
+COPY ./war/src /code/mockito-bug/war/src/
 COPY ./jar/pom.xml /code/mockito-bug/jar/
-COPY ./jar/src /code/mockito-bug/jar/
+COPY ./jar/src /code/mockito-bug/jar/src/
 
 WORKDIR /code/mockito-bug
 RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
