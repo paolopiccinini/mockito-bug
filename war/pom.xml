@@ -64,15 +64,13 @@
     <build>
         <finalName>springbootwildfly</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>4.0.0.Final</version>
-            </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+                <configuration>
+                    <mainClass>org.example.SpringbootwildflyApplication</mainClass>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 
