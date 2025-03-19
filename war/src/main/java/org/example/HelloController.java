@@ -9,6 +9,7 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class HelloController {
     @GetMapping("/hello")
     String hello() throws ClassNotFoundException {
         Class<?> testClass = Class.forName("org.example.Test");
+        Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener summaryGeneratingListener = new SummaryGeneratingListener();
         XMLRunListener xmlRunListener = new XMLRunListener();
@@ -32,7 +34,7 @@ public class HelloController {
         launcher.execute(request);
         summaryGeneratingListener.getSummary().getFailures().forEach(e -> logger.error("s", e.getException()));
         processTestResults(testClass, summaryGeneratingListener);
-        //Mockito.mock(Object.class);
+        Mockito.mock(Object.class);
         return "Hi";
     }
 
