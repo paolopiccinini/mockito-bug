@@ -16,7 +16,7 @@ RUN ./mvnw package
 ## Stage 2 : create the docker final image
 FROM quay.io/wildfly/wildfly:latest-jdk21
 COPY --from=build /code/mockito-bug/war/target/*.war /opt/jboss/wildfly/standalone/deployments/springbootwildfly.war
-COPY --from=build /code/mockito-bug/jar/target/*.jar /opt/jboss/wildfly/modules/jar/main/
+COPY --from=build /code/mockito-bug/jar/target/*.jar /opt/jboss/wildfly/modules/jar/main/jar.jar
 COPY ./jar/src/main/module.xml /opt/jboss/wildfly/modules/jar/main/
 COPY ./jar/libs/* /opt/jboss/wildfly/modules/jar/main/
 ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
