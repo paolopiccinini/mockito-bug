@@ -1,13 +1,14 @@
 package org.example;
 
-import org.junit.platform.commons.util.StringUtils;
+import io.micrometer.common.util.StringUtils;
 import org.junit.platform.engine.DiscoverySelector;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
+import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     String hello() throws ClassNotFoundException {
-        /*Class<?> testClass = Class.forName("org.example.Test");
+        Class<?> testClass = Class.forName("org.example.Test");
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener summaryGeneratingListener = new SummaryGeneratingListener();
         XMLRunListener xmlRunListener = new XMLRunListener();
@@ -30,8 +31,8 @@ public class HelloController {
         launcher.registerTestExecutionListeners(xmlRunListener, summaryGeneratingListener);
         launcher.execute(request);
         summaryGeneratingListener.getSummary().getFailures().forEach(e -> logger.error("s", e.getException()));
-        processTestResults(testClass, summaryGeneratingListener);*/
-        Mockito.mock(Object.class);
+        processTestResults(testClass, summaryGeneratingListener);
+        //Mockito.mock(Object.class);
         return "Hi";
     }
 

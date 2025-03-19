@@ -11,14 +11,16 @@ COPY ./jar/src /code/mockito-bug/jar/src/
 WORKDIR /code/mockito-bug
 RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
 RUN ./mvnw package
+RUN ./mvnw -pl jar dependency:copy-dependencies
+
 
 
 ## Stage 2 : create the docker final image
 FROM quay.io/wildfly/wildfly:latest-jdk21
 COPY --from=build /code/mockito-bug/war/target/*.war /opt/jboss/wildfly/standalone/deployments/springbootwildfly.war
 COPY --from=build /code/mockito-bug/jar/target/*.jar /opt/jboss/wildfly/modules/jar/main/jar.jar
-COPY ./jar/src/main/module.xml /opt/jboss/wildfly/modules/jar/main/
-COPY ./jar/libs/* /opt/jboss/wildfly/modules/jar/main/
+COPY --from=build /code/mockito-bug/jar/libs/* /opt/jboss/wildfly/modules/jar/main/
+COPY ./jar/module.xml /opt/jboss/wildfly/modules/jar/main/
 ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
 EXPOSE 8080
 EXPOSE 8787
