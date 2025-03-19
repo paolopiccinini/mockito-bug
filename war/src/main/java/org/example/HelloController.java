@@ -9,6 +9,7 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class HelloController {
         launcher.execute(request);
         summaryGeneratingListener.getSummary().getFailures().forEach(e -> logger.error("s", e.getException()));
         processTestResults(testClass, summaryGeneratingListener);
+        Mockito.mock(Object.class);
         return "Hi";
     }
 
