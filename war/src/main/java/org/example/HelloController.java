@@ -1,9 +1,7 @@
 package org.example;
 
 import io.micrometer.common.util.StringUtils;
-import org.junit.platform.commons.util.ClassLoaderUtils;
 import org.junit.platform.engine.DiscoverySelector;
-import org.junit.platform.engine.TestEngine;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ServiceLoader;
-
 @RestController
 @RequestMapping("/Paolo")
 public class HelloController {
@@ -28,12 +24,7 @@ public class HelloController {
     @GetMapping("/hello")
     String hello() throws ClassNotFoundException {
         Class<?> testClass = Class.forName("org.example.Test");
-        Class.forName("org.junit.jupiter.engine.JupiterTestEngine");
-        ClassLoaderUtils.getDefaultClassLoader();
         Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-        Iterable<TestEngine> testEngines = ServiceLoader.load(TestEngine.class,
-                ClassLoaderUtils.getDefaultClassLoader());
-        logger.info("testEngines: {}", testEngines.iterator().hasNext());
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener summaryGeneratingListener = new SummaryGeneratingListener();
         XMLRunListener xmlRunListener = new XMLRunListener();
