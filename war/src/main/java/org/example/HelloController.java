@@ -23,14 +23,12 @@ public class HelloController {
 
     @GetMapping("/hello")
     String hello() throws ClassNotFoundException {
-        Class<?> testClass = Class.forName("org.example.Test");
-        Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+        Class<?> testClass = Class.forName("org.example.PaoloUnitTest");
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener summaryGeneratingListener = new SummaryGeneratingListener();
-        XMLRunListener xmlRunListener = new XMLRunListener();
-        LauncherDiscoveryRequest request = getLauncherDiscoveryRequest(testClass, "test");
-        launcher.registerTestExecutionListeners(xmlRunListener, summaryGeneratingListener);
-        launcher.execute(request);
+        LauncherDiscoveryRequest request = getLauncherDiscoveryRequest(testClass, null);
+        logger.info("Are test presents: {}", launcher.discover(request).containsTests());
+        launcher.execute(request, summaryGeneratingListener);
         summaryGeneratingListener.getSummary().getFailures().forEach(e -> logger.error("s", e.getException()));
         processTestResults(testClass, summaryGeneratingListener);
         return "Hi";
@@ -44,14 +42,14 @@ public class HelloController {
 
         if (testsFailed > 0) {
             logFailedJUnit5Tests(summary);
-            System.out.println(testsFound + " tests: " + testsFailed + " failures, " + testsSkipped + " skipped (" + testClass.getName() + ").");
+            logger.info("{} tests: {} failures, {} skipped ({}).", testsFound, testsFailed, testsSkipped, testClass.getName());
         } else {
-            System.out.println(testsFound + " tests completed successfully (" + testClass.getName() + ").");
+            logger.info("{} tests completed successfully ({}).", testsFound, testClass.getName());
         }
     }
 
     private void logFailedJUnit5Tests(TestExecutionSummary summary) {
-        summary.getFailures().forEach(failure -> System.out.println(failure.getTestIdentifier().getDisplayName() + " " + failure.getException()));
+        summary.getFailures().forEach(failure -> logger.info(failure.getTestIdentifier().getDisplayName() + " " + failure.getException()));
     }
 
     private LauncherDiscoveryRequest getLauncherDiscoveryRequest(Class<?> testClass, String methodName) {
