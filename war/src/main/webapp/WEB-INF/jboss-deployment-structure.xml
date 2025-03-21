@@ -3,7 +3,7 @@
 <deployment>
     <dependencies>
         <module name="org.jboss.vfs" />
-        <module name="jar" />
+        <module name="jar" services="import" />
     </dependencies>
 </deployment>
 </jboss-deployment-structure>
